@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fade-in {
+  animation: fade-in 2s ease-in-out;
+}
+@keyframes border-animation {
+  0% {
+    border-color: #4f46e5;
+  }
+  50% {
+    border-color: #d946ef;
+  }
+  100% {
+    border-color: #ec4899;
+  }
+}
+.animated-border {
+  animation: border-animation 3s infinite;
+}
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.animate-slide-down {
+  animation: slide-down 0.5s ease-out;
+}
+.bg-gradient-radial {
+  background: radial-gradient(circle at bottom left, #4f46e5, #d946ef, #ec4899);
+}
