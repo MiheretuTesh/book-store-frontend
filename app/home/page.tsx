@@ -1,14 +1,42 @@
 "use client";
 
-import { useTheme } from "../../context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 import NavigationBar from "@/components/NavigationBar";
 import HeroSection from "@/components/HeroSection";
 import NewArrivalsSection from "@/components/NewArrivalsSection";
+import SearchedResult from "@/components/SearchedResult";
 import BestSellersSection from "@/components/BestSellersSection";
 import FeaturedBooksSection from "@/components/FeaturedBooksSection";
+import { useBooks } from "@/hooks/useBooks";
+import { FaSpinner } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Home: React.FC = () => {
   const { theme, setTheme } = useTheme();
+  const { data, error, isLoading, isSuccess } = useBooks();
+  const [searchResults, setSearchResults] = useState<any[] | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const [genre, setGenre] = useState<string | null>(null);
+  const router = useRouter();
+
+  const handleSetSearchResults = (results: any) => {
+    setSearchResults(results);
+    setGenre(null);
+  };
+
+  const handleSetGenreResults = (results: any, genre: string) => {
+    setSearchResults(results);
+    setGenre(genre);
+  };
+
+  if (isLoading || isSearching)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <FaSpinner className="animate-spin text-teal-500 text-4xl" />
+      </div>
+    );
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div
@@ -17,21 +45,52 @@ const Home: React.FC = () => {
       }`}
     >
       {/* Navigation Bar */}
-      <NavigationBar theme={theme} setTheme={setTheme} />
+      <NavigationBar />
 
       {/* Hero Section */}
       <section className="bg-gradient-radial from-teal-500 via-cyan-500 to-blue-500 text-white py-[100px] animate-fade-in">
-        <HeroSection />
+        <HeroSection
+          setSearchResults={handleSetSearchResults}
+          setIsSearching={setIsSearching}
+        />
       </section>
 
-      {/* New Arrivals Section */}
-      <NewArrivalsSection />
+      {/* Conditionally render sections based on search results */}
+      {searchResults ? (
+        searchResults.length > 0 ? (
+          <div className="search-results">
+            {genre && (
+              <h2 className="text-2xl font-bold text-center my-4">
+                {genre} Books
+              </h2>
+            )}
+            <SearchedResult searchResults={searchResults} />
+          </div>
+        ) : (
+          <div className="text-center text-xl mt-8">No Content Found</div>
+        )
+      ) : (
+        <>
+          {data?.newArrivals?.length > 0 ? (
+            <NewArrivalsSection newArrivals={data.newArrivals} />
+          ) : (
+            <div className="text-center text-xl mt-8">No Content Found</div>
+          )}
 
-      {/* Best Sellers Section */}
-      <BestSellersSection />
+          {data?.bestSellers?.length > 0 ? (
+            <BestSellersSection bestSellers={data.bestSellers} />
+          ) : (
+            <div className="text-center text-xl mt-8">No Content Found</div>
+          )}
 
-      {/* Featured Books Section */}
-      <FeaturedBooksSection />
+          {data?.featuredBooks?.length > 0 ? (
+            <FeaturedBooksSection featuredBooks={data.featuredBooks} />
+          ) : (
+            <div className="text-center text-xl mt-8">No Content Found</div>
+          )}
+        </>
+      )}
+
       {/* Footer */}
       <footer className="bg-teal-800 text-white py-4 text-center">
         <p>&copy; 2022 Book Store. All Rights Reserved.</p>
