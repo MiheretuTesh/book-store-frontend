@@ -1,6 +1,14 @@
 import React from "react";
 
-const NewArrivalsSection: React.FC<{ newArrivals: any[] }> = ({
+interface Book {
+  id: string;
+  image: string;
+  title: string;
+  author: string;
+  genre: string;
+}
+
+const NewArrivalsSection: React.FC<{ newArrivals: Book[] }> = ({
   newArrivals,
 }) => {
   return (

@@ -20,8 +20,8 @@ const AddBookPage: React.FC = () => {
   const router = useRouter();
   const mutation = useAddBook();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
     formData.append("author", author);
@@ -39,7 +39,7 @@ const AddBookPage: React.FC = () => {
       onSuccess: () => {
         router.push("/");
       },
-      onError: (error: any) => {
+      onError: (error: any | unknown) => {
         setError(error.message);
       },
     });

@@ -2,7 +2,7 @@ import { useMutation } from "react-query";
 import { useRouter } from "next/navigation";
 
 const login = async (credentials: { email: string; password: string }) => {
-  const response = await fetch("http://localhost:5000/auth/login", {
+  const response = await fetch("http://localhost:8080/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

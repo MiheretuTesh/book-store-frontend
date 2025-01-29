@@ -11,6 +11,7 @@ const LoginPage: React.FC = () => {
   const router = useRouter();
 
   const mutation = useLogin((token: string) => {
+    console.log(token, "token");
     router.push("/");
   }, setError);
 
@@ -54,7 +55,7 @@ const LoginPage: React.FC = () => {
           Login
         </button>
         <p className="mt-4 text-center text-gray-400">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <a href="/register" className="text-teal-500 hover:underline">
             Click here to register
           </a>

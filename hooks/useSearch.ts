@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 
 const fetchSearchResults = async (query: string, searchBy: string) => {
   const response = await fetch(
-    `http://localhost:5000/books/search-books?query=${query}&searchBy=${searchBy}`
+    `http://localhost:8080/books/search-books?query=${query}&searchBy=${searchBy}`
   );
   if (!response.ok) {
     throw new Error("Network response was not ok");

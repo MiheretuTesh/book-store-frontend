@@ -1,6 +1,14 @@
 import React from "react";
 
-const BestSellersSection: React.FC<{ bestSellers: any[] }> = ({
+interface Book {
+  id: string;
+  image: string;
+  title: string;
+  author: string;
+  genre: string;
+}
+
+const BestSellersSection: React.FC<{ bestSellers: Book[] }> = ({
   bestSellers,
 }) => {
   return (

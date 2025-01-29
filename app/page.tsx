@@ -9,25 +9,18 @@ import BestSellersSection from "@/components/BestSellersSection";
 import FeaturedBooksSection from "@/components/FeaturedBooksSection";
 import { useBooks } from "@/hooks/useBooks";
 import { FaSpinner } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Home: React.FC = () => {
-  const { theme, setTheme } = useTheme();
-  const { data, error, isLoading, isSuccess } = useBooks();
+  const { theme } = useTheme();
+  const { data, error, isLoading }: any = useBooks();
   const [searchResults, setSearchResults] = useState<any[] | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [genre, setGenre] = useState<string | null>(null);
-  const router = useRouter();
 
   const handleSetSearchResults = (results: any) => {
     setSearchResults(results);
     setGenre(null);
-  };
-
-  const handleSetGenreResults = (results: any, genre: string) => {
-    setSearchResults(results);
-    setGenre(genre);
   };
 
   if (isLoading || isSearching)

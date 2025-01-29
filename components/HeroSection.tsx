@@ -3,7 +3,7 @@ import { IconSearch } from "@tabler/icons-react";
 import { useSearch } from "@/hooks/useSearch";
 
 interface HeroSectionProps {
-  setSearchResults: (results: any) => void;
+  setSearchResults: (results: any[] | null) => void;
   setIsSearching: (isSearching: boolean) => void;
 }
 
@@ -14,7 +14,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   const [searchBy, setSearchBy] = useState("title");
   const [query, setQuery] = useState("");
 
-  const { data, refetch, isFetching } = useSearch(query, searchBy);
+  const { data, refetch } = useSearch(query, searchBy);
 
   const handleSearch = () => {
     setIsSearching(true);
@@ -31,7 +31,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   const handleTabClick = async (genre: string) => {
     setIsSearching(true);
     const response = await fetch(
-      `http://localhost:5000/books/genre/${genre.toLowerCase()}`
+      `http://localhost:8080/books/genre/${genre.toLowerCase()}`
     );
     const result = await response.json();
     setIsSearching(false);

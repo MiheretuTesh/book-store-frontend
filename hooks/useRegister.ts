@@ -6,7 +6,7 @@ const register = async (user: {
   name: string;
   //   role: string;
 }) => {
-  const response = await fetch("http://localhost:5000/auth/register", {
+  const response = await fetch("http://localhost:8080/auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
